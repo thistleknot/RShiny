@@ -1,0 +1,23 @@
+]0;/home/rstudio/RShinyrstudio@4618070cbaf5:~/RShiny$ [Krstudio@4618070cbaf5:~/RShiny$ git init
+Initialized empty Git repository in /home/rstudio/RShiny/.git/
+]0;/home/rstudio/RShinyrstudio@4618070cbaf5:~/RShiny$ git add
+Nothing specified, nothing added.
+Maybe you wanted to say 'git add .'?
+]0;/home/rstudio/RShinyrstudio@4618070cbaf5:~/RShiny$ git add .
+]0;/home/rstudio/RShinyrstudio@4618070cbaf5:~/RShiny$ git commit 
+error: cannot run vi: No such file or directory
+error: unable to start editor 'vi'
+Please supply the message using either -m or -F option.
+]0;/home/rstudio/RShinyrstudio@4618070cbaf5:~/RShiny$ git commit [K
+error: cannot run vi: No such file or directory
+error: unable to start editor 'vi'
+Please supply the message using either -m or -F option.
+]0;/home/rstudio/RShinyrstudio@4618070cbaf5:~/RShiny$ yum [K[K[K[Kapt-get install vi
+E: Could not open lock file /var/lib/dpkg/lock-frontend - open (13: Permission denied)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), are you root?
+]0;/home/rstudio/RShinyrstudio@4618070cbaf5:~/RShiny$ su
+Password: 
+su: Authentication failure
+]0;/home/rstudio/RShinyrstudio@4618070cbaf5:~/RShiny$ su[Kgit commit ..
+fatal: ..: '..' is outside repository
+]0;/home/rstudio/RShinyrstudio@4618070cbaf5:~/RShiny$ git commit ..[K
