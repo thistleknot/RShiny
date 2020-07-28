@@ -19,14 +19,18 @@ server <- function(input, output) {
              Country == input$countryInput
       )
   })
-  
 
   output$typeOutputs <- renderUI({
     selectInput("typeInput", "Type",
                 sort(unique(bcl$Type)),
                 selected = "Wine")
   })
+  
+  subfiltered <- reactive({
+    filter(bcl,Type==input$typeInput)
     
+  })
+  observe({print(subfiltered)})
   
   output$countryOutput <- renderUI({
     selectInput("countryInput", "Country",
@@ -49,6 +53,7 @@ server <- function(input, output) {
   observe({print(input$priceInput)})
   priceDiff <- reactive({diff(input$priceInput)})
   observe({print(priceDiff())})
+  observe({print(filtered()$Subtype)})
   }
 
 #shinyApp(ui = ui, server = server)

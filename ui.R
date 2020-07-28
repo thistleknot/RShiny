@@ -8,6 +8,7 @@ ui <- fluidPage(
                               value = c(25, 40), pre = "$"),
                   
                   uiOutput("typeOutputs"),
+                  uiOutput("subtypeOutputs"),
                   uiOutput("countryOutput")
                   
                   ),
