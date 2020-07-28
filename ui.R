@@ -1,4 +1,6 @@
 ui <- fluidPage(
+  
+  
   titlePanel("BC Liquor Store prices",windowTitle = "title"),
   sidebarLayout(
     #inputs
@@ -14,9 +16,18 @@ ui <- fluidPage(
                   ),
     #outputs
     mainPanel(
-      plotOutput("coolplot"),
-      br(), br(),
-      dataTableOutput("results")
+      
+      
+      tabsetPanel(
+        tabPanel("Tab 1", 
+                 plotOutput("coolplot"),
+                 br(), br(),
+                 dataTableOutput("results")
+                 ),
+        tabPanel("Tab 2", "Blank")
+      )
+      
+      
       )
   )
   
