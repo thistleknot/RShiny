@@ -16,7 +16,7 @@ server <- function(input, output) {
       filter(Price >= input$priceInput[1],
              Price <= input$priceInput[2],
              Type == input$typeInput,
-             #Subtype == input$subtypeInput,
+             Subtype == input$subtypeInput,
              Country == input$countryInput
       )
   })
