@@ -16,6 +16,7 @@ server <- function(input, output) {
       filter(Price >= input$priceInput[1],
              Price <= input$priceInput[2],
              Type == input$typeInput,
+             #Subtype == input$subtypeInput,
              Country == input$countryInput
       )
   })
@@ -27,10 +28,22 @@ server <- function(input, output) {
   })
   
   subfiltered <- reactive({
-    filter(bcl,Type==input$typeInput)
+    if (is.null(input$typeInput)) {
+      return(NULL)
+    }    
+    
+    unique(filter(bcl,Type==input$typeInput)$Subtype)
+  })
+  
+  output$subtypeOutputs <- renderUI({
+    selectInput("subtypeInput", "Subtype",
+                subfiltered(),
+                selected = subfiltered()[1]
+                
+                )
     
   })
-  observe({print(subfiltered)})
+  #observe({print(subfiltered)})
   
   output$countryOutput <- renderUI({
     selectInput("countryInput", "Country",
