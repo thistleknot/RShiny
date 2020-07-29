@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(shinyWidgets)
 
 bcl <- read.csv("bcl-data.csv", stringsAsFactors = FALSE)
 
@@ -11,7 +12,7 @@ server <- function(input, output, session) {
   #observe({updateNumericInput(session, "num", value = input$slider)})
   
   filtered <- reactive({
-    if (is.null(input$countryInput)) {
+    if (is.null(input$countryInput) || is.null(input$typeInput) || is.null(input$subtypeInput)) {
       return(NULL)
     }    
     
@@ -24,10 +25,16 @@ server <- function(input, output, session) {
       )
   })
 
+  typeFiltered <- sort(unique(bcl$Type))
+  
   output$typeOutputs <- renderUI({
-    selectInput("typeInput", "Type",
-                sort(unique(bcl$Type)),
-                selected = NULL, multiple=TRUE)
+    pickerInput("typeInput", "Type",
+                typeFiltered,
+                #options = list(`actions-box` = TRUE),
+                options = pickerOptions(
+                  actionsBox = TRUE),
+                selected = NULL,
+                multiple=TRUE)
   })
   
   subfiltered <- reactive({
@@ -38,19 +45,35 @@ server <- function(input, output, session) {
     unique(filter(bcl,Type==input$typeInput)$Subtype)
   })
   
+  countryFiltered  <- sort(unique(bcl$Country))
+  names(countryFiltered) = sort(unique(bcl$Country))
+  print(names(countryFiltered))
+  
+  #observe({print(countryFiltered())})
+  
   output$subtypeOutputs <- renderUI({
-    selectInput("subtypeInput", "Subtype",
+    pickerInput("subtypeInput", "Subtype",
                 subfiltered(),
-                #selected = subfiltered()[1]
-                selected = NULL, multiple=TRUE)
+                options = pickerOptions(
+                  actionsBox = TRUE),
+                selected = NULL,
+                multiple=TRUE)
     
   })
   #observe({print(subfiltered)})
   
   output$countryOutput <- renderUI({
-    selectInput("countryInput", "Country",
-                sort(unique(bcl$Country)),
-                selected = NULL, multiple=TRUE)
+    pickerInput("countryInput", "Country",
+                countryFiltered,
+                options = pickerOptions(
+                  actionsBox = TRUE),
+                selected=NULL,
+                #selected = countryFiltered[1], 
+                #selected = countryFiltered[10],
+                #selected = countryFiltered["Canada"],
+                #selected = "Canada",
+                multiple=TRUE
+                )
   })
   
   output$results <- renderDataTable({
