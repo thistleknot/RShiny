@@ -11,9 +11,7 @@ server <- function(input, output, session) {
   
   #observe({updateNumericInput(session, "num", value = input$slider)})
   
-  observe({
-    print(input$countryInput)
-  })
+  #observe({print(input$countryInput)})
   
   filtered <- reactive({
     if (is.null(input$countryInput) || is.null(input$typeInput) || is.null(input$subtypeInput)) {
@@ -80,22 +78,36 @@ server <- function(input, output, session) {
                 )
   })
   
-  output$results <- renderDataTable({
+  output$results1 <- renderDataTable({
     filtered()
   })
   
-  output$coolplot <- renderPlot({
+  output$results2 <- renderDataTable({
+    filtered()
+  })
+  
+  
+  output$coolplot1 <- renderPlot({
     if (is.null(filtered())) {
       return()
     }
     ggplot(filtered(), aes(Alcohol_Content)) +
       geom_histogram()
   })
+  
+  output$coolplot2 <- renderPlot({
+    if (is.null(filtered())) {
+      return()
+    }
+    ggplot(filtered(), aes(Price)) +
+      geom_histogram()
+  })
+  
   #testing error
-  observe({print(input$priceInput)})
+  #observe({print(input$priceInput)})
   priceDiff <- reactive({diff(input$priceInput)})
-  observe({print(priceDiff())})
-  observe({print(filtered()$Subtype)})
+  #observe({print(priceDiff())})
+  #observe({print(filtered()$Subtype)})
   }
 
 #shinyApp(ui = ui, server = server)
