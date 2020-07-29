@@ -11,6 +11,10 @@ server <- function(input, output, session) {
   
   #observe({updateNumericInput(session, "num", value = input$slider)})
   
+  observe({
+    print(input$countryInput)
+  })
+  
   filtered <- reactive({
     if (is.null(input$countryInput) || is.null(input$typeInput) || is.null(input$subtypeInput)) {
       return(NULL)
@@ -19,9 +23,9 @@ server <- function(input, output, session) {
     bcl %>%
       filter(Price >= input$priceInput[1],
              Price <= input$priceInput[2],
-             Type == input$typeInput,
-             Subtype == input$subtypeInput,
-             Country == input$countryInput
+             Type %in% c(input$typeInput),
+             Subtype %in% c(input$subtypeInput),
+             Country %in% c(input$countryInput)
       )
   })
 
