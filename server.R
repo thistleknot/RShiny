@@ -6,7 +6,10 @@ bcl <- read.csv("bcl-data.csv", stringsAsFactors = FALSE)
 
 print(str(bcl))
 
-server <- function(input, output) {
+server <- function(input, output, session) {
+  
+  #observe({updateNumericInput(session, "num", value = input$slider)})
+  
   filtered <- reactive({
     if (is.null(input$countryInput)) {
       return(NULL)
@@ -24,7 +27,7 @@ server <- function(input, output) {
   output$typeOutputs <- renderUI({
     selectInput("typeInput", "Type",
                 sort(unique(bcl$Type)),
-                selected = "Wine")
+                selected = NULL, multiple=TRUE)
   })
   
   subfiltered <- reactive({
@@ -38,9 +41,8 @@ server <- function(input, output) {
   output$subtypeOutputs <- renderUI({
     selectInput("subtypeInput", "Subtype",
                 subfiltered(),
-                selected = subfiltered()[1]
-                
-                )
+                #selected = subfiltered()[1]
+                selected = NULL, multiple=TRUE)
     
   })
   #observe({print(subfiltered)})
@@ -48,7 +50,7 @@ server <- function(input, output) {
   output$countryOutput <- renderUI({
     selectInput("countryInput", "Country",
                 sort(unique(bcl$Country)),
-                selected = "CANADA")
+                selected = NULL, multiple=TRUE)
   })
   
   output$results <- renderDataTable({

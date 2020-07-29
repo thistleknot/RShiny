@@ -8,6 +8,9 @@ ui <- fluidPage(
       
       sliderInput("priceInput", "Price", min = 0, max = 100,
                               value = c(25, 40), pre = "$"),
+      
+      #sliderInput("slider", "Move me", value = 5, 1, 10),
+      #numericInput("num", "Number", value = 5, 1, 10),
                   
                   uiOutput("typeOutputs"),
                   uiOutput("subtypeOutputs"),
